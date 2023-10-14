@@ -7,16 +7,27 @@ export const AuthContext=createContext()
 
 const initialvalue={user:null}
 
+// function reducer(state,action){
+// if(action.type==="login"){
+// return {...state,user:action.payload}
+// }else if(action.type==="logout"){
+// return {...state,user:null}
+// }
+// else{
+// return state
+// }
+// }
+
 function reducer(state,action){
-if(action.type="login"){
-return {...state,user:action.payload}
-}else if(action.type="logout"){
-return {...state,user:null}
-}
-else{
-return state
-}
-}
+  switch(action.type){
+  case "login":
+  return {...state,user:action.payload}
+  case "logout":
+  return {...state,user:null}
+  default:
+  return state
+  }
+  }
 
 const AuthProvider=({children})=>{
 const[state,dispatch]=useReducer(reducer,initialvalue)
@@ -56,6 +67,8 @@ useEffect(() => {
         catch(error){
           console.log(error)
         }
+      }else{
+        alert("no token")
       }
     };
     getCurrentUserData();

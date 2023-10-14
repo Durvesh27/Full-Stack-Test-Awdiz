@@ -33,10 +33,11 @@ if(!email || !password){
 return res.status(404).json({success:false,message:"Fill all fields"})
 }
 const logUSer=await userModel.findOne({email:email})
-const isPasswordCorrect=bcrypt.compare(password,logUSer?.password)
-if(!isPasswordCorrect){
-return res.status(404).json({success:false,message:"Enter correct password"})   
-}
+if (!logUSer) return res.json({ success: false, message: "User not Found" });
+    const isPasswordCorrect=await bcrypt.compare(password,logUSer.password)
+    if(!isPasswordCorrect){
+    return res.status(404).json({success:false,message:"Enter correct password"})   
+    }
 const token=jwt.sign({userId:logUSer._id},process.env.JWT_SECRET)
 const userObject={
 name:logUSer.name,
@@ -44,7 +45,7 @@ email:logUSer.email,
 role:logUSer.role,
 token:token
 }
-return res.status(200).json({success:true,message:"Logged in Successfully",userDetails:{userObject}})
+return res.status(200).json({success:true,message:"Logged in Successfully",userObject:userObject})
 }catch(error){
 return res.status(500).json({success:false,message:error.message})  
 }

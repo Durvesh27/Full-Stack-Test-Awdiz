@@ -10,19 +10,19 @@ const router=useNavigate()
 const handleChange=(e)=>{
 setUserData({...userData,[e.target.name]:e.target.value})
 }
-
+console.log(userData,"data")
 const handleSubmit=async(e)=>{
 e.preventDefault()
-if(userData.email,userData.password){
+if(userData.email && userData.password){
 try{
 const response=await axios.post("http://localhost:8000/login",{userData})
 if(response.data.success){
 alert(response.data.message)
-localStorage.setItem("QuizToken",JSON.stringify(response.data.userDetails.userObject.token))
-Login(response.data.userDetails.userObject)
+localStorage.setItem("QuizToken",JSON.stringify(response.data.userObject.token))
+Login(response.data.userObject)
 router('/')
 }else{
-alert("Internal Server error")
+alert(response.data.message)
 }
 }catch(error){
 console.log(error)
