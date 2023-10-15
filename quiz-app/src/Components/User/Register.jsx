@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import './User.css'
 const Register = () => {
 const [userData,setUserData]=useState({name:"",email:"",password:"",role:"User"})
 const router=useNavigate()
@@ -29,21 +30,22 @@ alert("Please fill all the fields")
 }
 }
   return (
-    <div>
-      <h2 style={{textAlign:"center"}}>Register</h2>
-      <form style={{display:"flex" ,flexDirection:"column",width:"100%",alignItems:"center"}} onSubmit={handleSubmit}>
-        <label>Enter your name:</label>
-        <input type="text" name="name" onChange={handleChange}/>
-        <label>Enter your email:</label>
-        <input type="email" name="email" onChange={handleChange}/>
-        <label>Select role:</label>
-        <select name="role" onChange={handleChange}>
+    <div className='register'>
+            <h2>Register</h2>
+      <form className='form' onSubmit={handleSubmit}>
+        <label>Enter your name</label>
+        <input type="text" name="name" onChange={handleChange} className='form-ip'/>
+        <label>Enter your email</label>
+        <input type="email" name="email" onChange={handleChange} className='form-ip'/>
+        <label>Select role</label>
+        <select name="role" onChange={handleChange} className='form-ip'>
             <option>User</option>
             <option>Admin</option>
             </select>
-        <label>Enter your password:</label>
-        <input type="password" name="password" onChange={handleChange}/>
-        <input type="submit" value='Register'/>
+        <label>Enter your password</label>
+        <input type="password" name="password" onChange={handleChange} className='form-ip'/>
+        <input type="submit" value='Register' className='reg-btn'/>
+        <p>Already have an account? Sign-in</p>
       </form>
     </div>
   )

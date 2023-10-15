@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../../MyContext";
 import axios from "axios";
-
+import "../../index.css";
+import { useNavigate } from "react-router-dom";
 const Home = () => {
   const { state, Logout } = useContext(AuthContext);
   const [questions, setQuestion] = useState();
-
+  const router=useNavigate()
   // const response=axios.post("http://localhost:8000/create-quiz")
   // if(response.data.success){
   // setQuestion(response.data.details)
@@ -20,18 +21,22 @@ const Home = () => {
       <h2>{state?.user?.email}</h2>
       <h3 onClick={Logout}>Logout</h3>
     </div> */}
-      <div>
+      <div className="home">
         <img
-          src="https://media.istockphoto.com/id/1490047327/photo/3d-creation-of-graphic-design-creative-project-progress-and-solution-speech-bubble-message.jpg?s=2048x2048&w=is&k=20&c=GGMQnai3lczYO2a7RujHpnypLHSZQsynChCMW2TPcbw="
+          src="https://img.freepik.com/premium-vector/collection-colored-thin-icon-learning-subject-book-graduated-hat-learning-education-concept-vector-illustration_168824-141.jpg?w=740"
           alt=""
-          style={{
-          width:"50%",
-          height:"80vh",
-          marginTop:"65px",
-          marginLeft:"20px",
-          border:"1px solid red"
-          }}
         />
+        <div className="home-sec">
+<h1 className="home-sec-title">Welcome to Quiza</h1>
+<p className="home-text">Practice and Set-up quizzes on our Platform</p>
+<div>
+  <button className="home-btns home-btn1" onClick={()=>router('/register')}>Register</button>
+  <button className="home-btns home-btn2" onClick={()=>router('/login')}>Login</button>
+</div>
+          <div>
+
+          </div>
+        </div>
       </div>
     </>
   );
