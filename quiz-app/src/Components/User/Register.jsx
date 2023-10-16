@@ -30,7 +30,7 @@ alert("Please fill all the fields")
 }
 }
   return (
-    <div className='register'>
+    <div className='user'>
             <h2>Register</h2>
       <form className='form' onSubmit={handleSubmit}>
         <label>Enter your name</label>
@@ -38,14 +38,14 @@ alert("Please fill all the fields")
         <label>Enter your email</label>
         <input type="email" name="email" onChange={handleChange} className='form-ip'/>
         <label>Select role</label>
-        <select name="role" onChange={handleChange} className='form-ip'>
-            <option>User</option>
+        <select name="role" onChange={handleChange} className='form-ip opt'>
+            <option >User</option>
             <option>Admin</option>
             </select>
         <label>Enter your password</label>
         <input type="password" name="password" onChange={handleChange} className='form-ip'/>
         <input type="submit" value='Register' className='reg-btn'/>
-        <p>Already have an account? Sign-in</p>
+        <p>Already have an account? <b style={{color:"blue"}} onClick={()=>router('/login')}>Login</b></p>
       </form>
     </div>
   )

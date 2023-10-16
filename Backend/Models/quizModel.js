@@ -1,6 +1,10 @@
 import mongoose, { Schema } from "mongoose";
 
 const quizSchema=new Schema({
+category:{
+type:"String",
+required:true
+},
 question:{
 type:"String",
 required:true

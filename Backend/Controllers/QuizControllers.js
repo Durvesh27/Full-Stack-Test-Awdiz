@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 
 export const CreateQuiz=async(req,res)=>{
 try{
-const{question,opt1,opt2,opt3,opt4,answer}=req.body;
+const{category,question,opt1,opt2,opt3,opt4,answer}=req.body.questionData
 const{token}=req.body;
 const decodedData=jwt.verify(token,process.env.JWT_SECRET)
 if(!decodedData){
@@ -17,13 +17,14 @@ opt2,
 opt3,
 opt4,
 answer,
+category,
 userId:userId
 }
 const element=new quizModel(details)
 await element.save()
-return res.status(200).json({success:true,message:"question created"}) 
+return res.status(200).json({success:true,message:"quiz created"}) 
 }
 catch(error){
-return res.status(500).json({success:false,message:error.message}) 
+return res.status(500).json({success:false,message:error}) 
 }
 }

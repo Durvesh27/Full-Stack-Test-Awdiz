@@ -33,14 +33,15 @@ alert("Please fill all the fields")
 }
 }
   return (
-    <div>
+    <div className='user'>
       <h2 style={{textAlign:"center"}}>Login</h2>
-      <form style={{display:"flex" ,flexDirection:"column",width:"100%",alignItems:"center"}} onSubmit={handleSubmit}>
-        <label>Enter your email:</label>
-        <input type="email" name="email" onChange={handleChange}/>
-        <label>Enter your password:</label>
-        <input type="password" name="password" onChange={handleChange}/>
-        <input type="submit" value='Login'/>
+      <form className="form" onSubmit={handleSubmit}>
+        <label>Enter your email</label>
+        <input type="email" name="email" onChange={handleChange} className='form-ip'/>
+        <label>Enter your password</label>
+        <input type="password" name="password" onChange={handleChange} className='form-ip'/>
+        <input type="submit" value='Login'  className='reg-btn'/>
+        <p>Don't have an account? <b style={{color:"blue"}} onClick={()=>router('/register')}>Register</b></p>
       </form>
     </div>
   )
