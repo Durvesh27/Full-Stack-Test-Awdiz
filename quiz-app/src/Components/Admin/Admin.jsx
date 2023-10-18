@@ -4,14 +4,14 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 const Admin = () => {
-    const [questionData,setQuestionData]=useState({category:"",question:"",opt1:"",opt2:"",opt3:"",opt4:"",answer:""})
+    const [questionData,setQuestionData]=useState({category:"",categoryImg:"",question:"",opt1:"",opt2:"",opt3:"",opt4:"",answer:""})
     const router=useNavigate()
     const handleChange=(e)=>{
     setQuestionData({...questionData,[e.target.name]:e.target.value})
     }
     const handleSubmit=async(e)=>{
     e.preventDefault()
-    if(questionData.category && questionData.question && questionData.answer && questionData.opt1 && questionData.opt2 && questionData.opt3 && questionData.opt4){
+    if(questionData.category && questionData.categoryImg && questionData.question && questionData.answer && questionData.opt1 && questionData.opt2 && questionData.opt3 && questionData.opt4){
     try{
     const token=JSON.parse(localStorage.getItem("QuizToken"))
     if(token){
@@ -46,6 +46,8 @@ const Admin = () => {
       <form className="form" onSubmit={handleSubmit}>
       <label>Enter Category</label>
         <input type="text" name="category" onChange={handleChange} className='form-ip'/>
+      <label>Enter Category Image</label>
+        <input type="text" name="categoryImg" onChange={handleChange} className='form-ip'/>
         <label>Enter Question</label>
         <input type="text" name="question" onChange={handleChange} className='form-ip'/>
         <label>Enter Option1</label>
