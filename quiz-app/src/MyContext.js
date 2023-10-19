@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useState } from "react";
 import { useEffect } from "react";
 import { useReducer } from "react";
 import { createContext } from "react";
@@ -31,7 +32,7 @@ function reducer(state,action){
 
 const AuthProvider=({children})=>{
 const[state,dispatch]=useReducer(reducer,initialvalue)
-
+const[questions,setQuestions]=useState([])
 function Login(data){
 if(data){
 dispatch({
@@ -75,7 +76,7 @@ useEffect(() => {
   }, []);
 
 return(
-<AuthContext.Provider value={{Login,Logout,state}}>
+<AuthContext.Provider value={{Login,Logout,state,questions,setQuestions}}>
     {children}
 </AuthContext.Provider>
 )

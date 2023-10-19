@@ -42,3 +42,26 @@ export const GetCategories = async (req, res) => {
     return res.status(500).json({ success: false, message: error });
   }
 };
+
+export const getData=async(req,res)=>{
+  try {
+    const {catId}=req.body;
+    const catData = await quizModel.findById(catId)
+    return res.json({ success: true, catData:catData });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  } 
+}
+
+// export const Paginate=async(req,res)=>{
+//   try {
+//     const {page,limit=1,catId}=req.body;
+//     const skip = (parseInt(page) - 1) * parseInt(limit);
+//     const limitValue = parseInt(limit);
+//     const quizData= await quizModel.findById(catId);
+//     const event=quizData.skip(skip).limit(limit)
+//     return res.json({ success: true, event:event });
+//   } catch (error) {
+//     return res.status(500).json({ success: false, message: error.message });
+//   }  
+// }

@@ -2,10 +2,15 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-
+import './Elements.css'
+import { useContext } from "react";
+import { AuthContext } from "../../MyContext";
+import { useNavigate } from "react-router-dom";
 const Categories = () => {
   const [allCategories, setAllCategories] = useState([]);
   const [flag,setFlag]=useState(false)
+  const {setQuestions}=useContext(AuthContext)
+  const router=useNavigate()
   useEffect(() => {
     async function getAllCategories() {
       const { data } = await axios.get(
@@ -19,14 +24,14 @@ setAllCategories(data.category)
     }
     getAllCategories()
   }, []);
-  console.log(allCategories,"all")
-  return <div>
+
+  return <div className="categories">
   {
     allCategories.map((item)=>(
-    <div key={item._id} style={{width:"100px",height:"200px",border:"1px solid black"}}>
+    <div key={item._id} className="main-class">
     <h2>{item.category}</h2>
-    <img src={item.categoryImg} alt="" style={{width:"80%px",height:"60%"}}/>
-    <button>Start quiz</button>
+    <img src={item.categoryImg} className="cat-img" />
+    <button onClick={()=>router(`/questions/${item._id}`)}>Start quiz</button>
     </div>
     ))
   }

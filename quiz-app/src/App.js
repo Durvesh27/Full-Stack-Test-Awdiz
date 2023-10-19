@@ -4,6 +4,7 @@ import Login from "./Components/User/Login";
 import Home from "./Components/Common/Home";
 import Admin from "./Components/Admin/Admin";
 import Categories from "./Components/Elements/Categories";
+import Questions from "./Components/Elements/Questions";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route exact path="/login" element={<Login/>}/>
         <Route exact path="/admin" element={<Admin/>}/>
         <Route exact path="/categories" element={<Categories/>}/>
+        <Route exact path="/questions/:quizId" element={<Questions/>}/>
       </Routes>
     </>
   );
