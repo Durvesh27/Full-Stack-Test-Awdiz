@@ -6,6 +6,7 @@ import './Elements.css'
 import { useContext } from "react";
 import { AuthContext } from "../../MyContext";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@chakra-ui/react";
 const Categories = () => {
   const [allCategories, setAllCategories] = useState([]);
   const [flag,setFlag]=useState(false)
@@ -31,7 +32,7 @@ setAllCategories(data.category)
     <div key={item._id} className="main-class">
     <h2>{item.category}</h2>
     <img src={item.categoryImg} className="cat-img" />
-    <button onClick={()=>router(`/questions/${item._id}`)}>Start quiz</button>
+    <Button onClick={()=>router(`/questions/${item.category}`)}>Start quiz</Button>
     </div>
     ))
   }

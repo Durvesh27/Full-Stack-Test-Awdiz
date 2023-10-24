@@ -35,12 +35,12 @@ const quizSchema = new Schema({
   //     opt4: {
   //       type: "String",
   //       required: true,
-  //     },
-  //   },
+  //     }
+  //   }
   // ],
-  data:{
-    type:[Object]
-},
+//   data:{
+//     type:[Object]
+// },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

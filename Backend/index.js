@@ -3,7 +3,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import { Login, Register, getCurrentUser } from './Controllers/UserControllers.js'
-import { CreateQuiz, GetCategories, getData } from './Controllers/QuizControllers.js'
+import {  GetCategories,checkAnswer,createQuestion, getData } from './Controllers/QuizControllers.js'
 import { CheckAdmin } from './Middlewares/AllMiddlewares.js'
 const app=express()
 
@@ -17,9 +17,10 @@ app.get('/',()=>{
 app.post("/register",Register)
 app.post("/login",Login)
 app.post("/current-user",getCurrentUser)
-app.post("/create-quiz",CheckAdmin,CreateQuiz)
+app.post("/create-quiz",CheckAdmin,createQuestion)
 app.get("/get-categories",GetCategories)
 app.post("/get-data",getData)
+app.post("/check-answer",checkAnswer)
 // app.post("/paginate",Paginate)
 mongoose.connect(process.env.MONGO_URL)
 .then(()=>{

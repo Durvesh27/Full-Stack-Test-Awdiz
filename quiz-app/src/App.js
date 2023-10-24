@@ -5,6 +5,7 @@ import Home from "./Components/Common/Home";
 import Admin from "./Components/Admin/Admin";
 import Categories from "./Components/Elements/Categories";
 import Questions from "./Components/Elements/Questions";
+import Dummy from "./Components/Elements/Dummy";
 
 function App() {
   return (
@@ -14,8 +15,9 @@ function App() {
         <Route exact path="/register" element={<Register/>}/>
         <Route exact path="/login" element={<Login/>}/>
         <Route exact path="/admin" element={<Admin/>}/>
+        <Route exact path="/dummy" element={<Dummy/>}/>
         <Route exact path="/categories" element={<Categories/>}/>
-        <Route exact path="/questions/:quizId" element={<Questions/>}/>
+        <Route exact path="/questions/:quizCategory" element={<Questions/>}/>
       </Routes>
     </>
   );

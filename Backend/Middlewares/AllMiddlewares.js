@@ -15,7 +15,7 @@ return res.status(404).json({success:false,message:"Access granted only to Admin
 }
 next()
 }
-catch{
-return res.status(500).json({success:false,message:error})  
+catch(error){
+return res.status(500).json({success:false,message:error.message})  
 }
 }
