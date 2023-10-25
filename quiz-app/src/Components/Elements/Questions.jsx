@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button, Radio, RadioGroup, Stack } from "@chakra-ui/react";
+import { AuthContext } from "../../MyContext";
 const Questions = () => {
+  const {state}=useContext(AuthContext)
   const [questionData, setQuestionData] = useState([]);
   const [check, setCheck] = useState("");
+  const [questionNo,setQuestionNo]=useState(1)
   const { quizCategory } = useParams();
+  const router=useNavigate()
   var storedNum = Number(localStorage.getItem("Page"));
   const [page, setPage] = useState(
     Number.isInteger(storedNum) && storedNum !== 0 ? storedNum : 1
@@ -20,36 +24,38 @@ const Questions = () => {
     });
     if (data.success) {
       setQuestionData(data.result);
-    }
+    } 
   }
 
   useEffect(() => {
     localStorage.setItem("Page", String(page));
     getData(quizCategory);
+    if(!questionData){
+      alert("Quiz Completed")
+      router('/results')
+    }
   }, [page]);
 
-  // const handleInc = () => {
-  //   setPage(page + 1);
-  // };
-  // const handleDec = () => {
-  //   setPage(page - 1);
-  // };
+
 
   const handleSubmit = async (quesId) => {
-    console.log(check,"chk")
     try{
-      const { data } = await axios.post("http://localhost:8000/check-answer", {
+    const token=JSON.parse(localStorage.getItem("QuizToken")) 
+      const { data } = await axios.post("http://localhost:8000/submit-answer", {
         questionId: quesId,
-        answered:check,
+        submittedAnswer:check,
+        loggedUserId:state.user.id,
+        token:token
       });
       if (data.success) {
-        alert(data.message);
-        console.log(data.results,data.answered,data.id)
+      setPage(page+1)
+      setQuestionNo(questionNo+1)
+      setCheck("")
+      alert("ans submitted")
       }
     }
-    
     catch(error){
-      console(error.message)
+    alert(error.message)
     }
   
   };
@@ -58,7 +64,7 @@ const Questions = () => {
     <div>
       {questionData?.map((item) => (
         <div className="questions-main" key={item._id}>
-          <h3>{item?.question}</h3>
+          <h3><span>{questionNo}.</span> {item?.question}</h3>
           <RadioGroup onChange={setCheck}>
             <Stack direction="column" spacing={10}>
               <Radio value={item?.opt1} name="opt1">

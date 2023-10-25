@@ -3,8 +3,8 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import { Login, Register, getCurrentUser } from './Controllers/UserControllers.js'
-import {  GetCategories,checkAnswer,createQuestion, getData } from './Controllers/QuizControllers.js'
-import { CheckAdmin } from './Middlewares/AllMiddlewares.js'
+import {  GetCategories,categoryQuestions,checkAnswer,createQuestion, getAnswerByUser, getData, getResult } from './Controllers/QuizControllers.js'
+import { CheckAdmin, CheckUser } from './Middlewares/AllMiddlewares.js'
 const app=express()
 
 app.use(express.json())
@@ -20,8 +20,10 @@ app.post("/current-user",getCurrentUser)
 app.post("/create-quiz",CheckAdmin,createQuestion)
 app.get("/get-categories",GetCategories)
 app.post("/get-data",getData)
-app.post("/check-answer",checkAnswer)
-// app.post("/paginate",Paginate)
+app.post("/get-result",getResult)
+app.post("/submit-answer",CheckAdmin,checkAnswer)
+app.post("/get-answers",CheckAdmin,getAnswerByUser)
+app.post("/category-questions",categoryQuestions)
 mongoose.connect(process.env.MONGO_URL)
 .then(()=>{
 console.log("Connected to DB")

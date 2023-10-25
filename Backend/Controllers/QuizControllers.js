@@ -1,3 +1,4 @@
+import AnswerModal from "../Models/AnswerModal.js";
 import QuestionModel from "../Models/QuestionModel.js";
 import quizModel from "../Models/quizModel.js";
 import jwt from "jsonwebtoken";
@@ -24,7 +25,7 @@ import jwt from "jsonwebtoken";
 //       categoryImg,
 //       userId: userId,
 //     };
-//     if (!result) {      
+//     if (!result) {
 //       const element = new quizModel(details);
 //       element.data.push({question, opt1, opt2, opt3, opt4 ,answer})
 //       await element.save();
@@ -34,36 +35,34 @@ import jwt from "jsonwebtoken";
 //     return res.status(500).json({ success: false, message: error.message });
 //   }
 // };
-export const createQuestion=async(req,res)=>{
+export const createQuestion = async (req, res) => {
   try {
-    const { category,categoryImg,question, opt1, opt2, opt3, opt4, answer } =
+    const { category, categoryImg, question, opt1, opt2, opt3, opt4, answer } =
       req.body.questionData;
-    const result = await quizModel.findOne({ category:category });
-    const element = new QuestionModel({question, opt1, opt2, opt3, opt4 ,answer, category});
-    if (!result) { 
-      const quiz=new quizModel({
-        category,categoryImg,userId:req.userId
-      })
-      await quiz.save()
+    const result = await quizModel.findOne({ category: category });
+    const element = new QuestionModel({
+      question,
+      opt1,
+      opt2,
+      opt3,
+      opt4,
+      answer,
+      category,
+    });
+    if (!result) {
+      const quiz = new quizModel({
+        category,
+        categoryImg,
+        userId: req.userId,
+      });
+      await quiz.save();
     }
-      await element.save();
-      return res.status(200).json({ success: true, message: "quiz created"});
+    await element.save();
+    return res.status(200).json({ success: true, message: "quiz created" });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
   }
-}
-// export const createCategory=async(req,res)=>{
-//   try{
-//   const {category,categoryImg}=req.body.questionData
-//   const quiz=new quizModel({
-//     category,categoryImg,userId:req.userId
-//   })
-//   await quiz.save()
-//   return res.status(200).json({ success: true, quiz});
-//   }catch(error){
-//     return res.status(500).json({ success: false, message: error.message });
-//   }
-// }
+};
 
 export const GetCategories = async (req, res) => {
   try {
@@ -74,45 +73,96 @@ export const GetCategories = async (req, res) => {
   }
 };
 
-export const getData=async(req,res)=>{
+export const getData = async (req, res) => {
   try {
-    const {page,limit=1,category}=req.body;
+    const { page, limit = 1, category } = req.body;
+    if (!page || !category)
+      return res.status(404).json({ success: false, message: error.message });
+
     const skip = (parseInt(page) - 1) * parseInt(limit);
     const limitValue = parseInt(limit);
 
-    const catData = await QuestionModel.find({category:category}).skip(skip).limit(limitValue)
-    // const result=catData?.data?.slice(page-1,page)
-    // const result=catData?.data
-    return res.json({ success: true, result:catData });
+    const catData = await QuestionModel.find({ category: category })
+      .skip(skip)
+      .limit(limitValue);
+    if (catData) {
+      return res.status(200).json({ success: true, result: catData });
+    }
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
-  } 
-}
+  }
+};
 
-export const checkAnswer=async(req,res)=>{
-  try{
-  const{questionId,answered}=req.body;
-  const results=await QuestionModel.findById({_id:questionId})
-  if(results.answer===answered){
-    return res.status(200).json({ success: true, message: "Correct answer" , results:results.answer, answered,id:questionId}); 
+export const categoryQuestions = async (req, res) => {
+  try {
+    const { category } = req.body;
+    const questions = await QuestionModel.find({ category: category });
+    return res.status(200).json({ success: true, questions });
+  } catch (error) {
+    return res.status(404).json({ success: false, message: error.message });
   }
-  else{
-    return res.status(200).json({ success: true, message: "Wrong answer" , results:results.answer, answered,id:questionId}); 
+};
+
+export const checkAnswer = async (req, res) => {
+  try {
+    const { loggedUserId, questionId, submittedAnswer } = req.body;
+    if (!loggedUserId || !questionId || !submittedAnswer)
+      return res.status(404).json({ success: false, message: "Data missing" });
+    const answers = new AnswerModal({
+      loggedUserId,
+      questionId,
+      submittedAnswer,
+    });
+    await answers.save();
+    return res.status(200).json({ success: true, answers });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
   }
+};
+
+export const allAnswers = async (req, res) => {
+  try {
+    const answer = await AnswerModal.find({});
+    return res.status(200).json({ success: true, answer });
+  } catch (error) {
+    return res.status(404).json({ success: false, message: error.message });
   }
-  catch(error){
-    return res.status(500).json({ success: false, message: error.message }); 
+};
+
+export const getAnswerByUser = async (req, res) => {
+  try {
+    const answer = await AnswerModal.find({ userId: req.userId });
+    return res.status(200).json({ success: true, answer });
+  } catch (error) {
+    return res.status(404).json({ success: false, message: error.message });
   }
+};
+
+export const getResult = async (req, res) => {
+  try {
+    const { category } = req.body;
+    const answers = await AnswerModal.find({});
+    const questions = await QuestionModel.find({ category: category });
+    // console.log(questions,answers)
+if(questions && answers){
+  function markCalc(){
+    let count = 0;
+    questions.forEach((que) => {
+      answers.forEach((ans) => {
+        if (que._id === ans.questionId && que.answer === ans.submittedAnswer) {
+    console.log("work")
+          count += 1;
+        }
+      });
+    }); 
+    console.log(count)
+    return count;
+  }
+  return res.status(200).json({ success: true, marks:markCalc() });
+}else{
+  console.log("missing")
 }
-// export const Paginate=async(req,res)=>{
-//   try {
-//     const {page,limit=1,catId}=req.body;
-//     const skip = (parseInt(page) - 1) * parseInt(limit);
-//     const limitValue = parseInt(limit);
-//     const quizData= await quizModel.findById(catId);
-//     const event=quizData.skip(skip).limit(limit)
-//     return res.json({ success: true, event:event });
-//   } catch (error) {
-//     return res.status(500).json({ success: false, message: error.message });
-//   }  
-// }
+  } catch (error) {
+    return res.status(404).json({ success: false, message: error.message });
+  }
+};

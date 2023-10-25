@@ -43,7 +43,8 @@ const userObject={
 name:logUSer.name,
 email:logUSer.email,
 role:logUSer.role,
-token:token
+token:token,
+id:logUSer._id
 }
 return res.status(200).json({success:true,message:"Logged in Successfully",userObject:userObject})
 }catch(error){
@@ -63,7 +64,8 @@ const loggedUser=await userModel.findOne({_id:userId})
 const userDetails={
     name:loggedUser.name,
     email:loggedUser.email,
-    role:loggedUser.role
+    role:loggedUser.role,
+    id:loggedUser._id
 }
 return res.status(200).json({success:true,user:userDetails})
     }
