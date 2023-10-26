@@ -11,6 +11,10 @@ const Questions = () => {
   const [check, setCheck] = useState("");
   const [questionNo,setQuestionNo]=useState(1)
   const { quizCategory } = useParams();
+  const [loading,setLoading]=useState(false)
+  const [timer,setTimer]=useState(0)
+  const [start,setStart]=useState(false)
+  const [end,setEnd]=useState(false)
   const router=useNavigate()
   var storedNum = Number(localStorage.getItem("Page"));
   const [page, setPage] = useState(
@@ -24,20 +28,22 @@ const Questions = () => {
     });
     if (data.success) {
       setQuestionData(data.result);
+      setLoading(true)
     } 
   }
 
   useEffect(() => {
     localStorage.setItem("Page", String(page));
     getData(quizCategory);
-    if(!questionData){
-      alert("Quiz Completed")
-      router('/results')
-    }
   }, [page]);
 
 
 
+if(loading && questionData.length===0){
+  localStorage.setItem("Page", String(1));
+  router('/result')
+  // router(`/result/${questionData[0]?.category}`)
+}
   const handleSubmit = async (quesId) => {
     try{
     const token=JSON.parse(localStorage.getItem("QuizToken")) 
@@ -51,6 +57,7 @@ const Questions = () => {
       setPage(page+1)
       setQuestionNo(questionNo+1)
       setCheck("")
+      setStart(true)
       alert("ans submitted")
       }
     }
@@ -60,11 +67,30 @@ const Questions = () => {
   
   };
 
+// useEffect(()=>{
+// const timeout=setInterval(()=>{
+// setTimer(timer+1)
+// },1000)
+
+// console.log(timeout,"timeer")
+// // if(timeout===10){
+// // clearInterval(timeout)
+// // router('/result')
+// // }
+// // return () => {
+// //   clearInterval(timeout);
+// // };
+// },[])
+
   return (
     <div>
       {questionData?.map((item) => (
         <div className="questions-main" key={item._id}>
-          <h3><span>{questionNo}.</span> {item?.question}</h3>
+          <div>
+            <div className="head-flex">
+            <h2 style={{fontWeight:600,fontSize:"17px"}}><span>{questionNo}. </span> {item?.question}</h2>
+          <h2 style={{fontWeight:600,fontSize:"16px"}}>Time left : 5 sec</h2>
+            </div>
           <RadioGroup onChange={setCheck}>
             <Stack direction="column" spacing={10}>
               <Radio value={item?.opt1} name="opt1">
@@ -81,9 +107,10 @@ const Questions = () => {
               </Radio>
             </Stack>
           </RadioGroup>
-          <Button onClick={() => handleSubmit(item._id)}>
+          <Button mt={5} colorScheme='facebook' variant='solid' onClick={() => handleSubmit(item._id)}>
             Submit
           </Button>
+          </div>
         </div>
       ))}
     </div>

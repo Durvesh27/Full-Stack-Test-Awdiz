@@ -138,31 +138,28 @@ export const getAnswerByUser = async (req, res) => {
   }
 };
 
-export const getResult = async (req, res) => {
-  try {
-    const { category } = req.body;
-    const answers = await AnswerModal.find({});
-    const questions = await QuestionModel.find({ category: category });
-    // console.log(questions,answers)
-if(questions && answers){
-  function markCalc(){
-    let count = 0;
-    questions.forEach((que) => {
-      answers.forEach((ans) => {
-        if (que._id === ans.questionId && que.answer === ans.submittedAnswer) {
-    console.log("work")
-          count += 1;
-        }
-      });
-    }); 
-    console.log(count)
-    return count;
-  }
-  return res.status(200).json({ success: true, marks:markCalc() });
-}else{
-  console.log("missing")
-}
-  } catch (error) {
-    return res.status(404).json({ success: false, message: error.message });
-  }
-};
+// export const getResult = async (req, res) => {
+//   try {
+//     const { category } = req.body;
+//     const answers = await AnswerModal.find({});
+//     const questions = await QuestionModel.find({ category: category });
+//     // console.log(questions,answers)
+// if(questions && answers){
+//   function markCalc(){
+//     let newScore = 0;
+//     questions.forEach((q) => {
+//       const matchedAnswer = answers.find((a) => a.questionId === q._id);
+//       if (matchedAnswer && matchedAnswer.submittedAnswer === q.answer) {
+//         newScore++;
+//       }
+//       return newScore
+//     });
+//   }
+//   return res.status(200).json({ success: true, marks:markCalc() });
+// }else{
+//   console.log("missing")
+// }
+//   } catch (error) {
+//     return res.status(404).json({ success: false, message: error.message });
+//   }
+// };

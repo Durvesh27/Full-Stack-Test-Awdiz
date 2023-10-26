@@ -4,6 +4,7 @@ import { AuthContext } from "../../MyContext";
 import axios from "axios";
 import "../../index.css";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@chakra-ui/react";
 const Home = () => {
   const { state, Logout } = useContext(AuthContext);
   const [questions, setQuestion] = useState();
@@ -30,8 +31,8 @@ const Home = () => {
 <h1 className="home-sec-title">Welcome to Quiza</h1>
 <p className="home-text">Practice and Set-up quizzes on our Platform</p>
 <div>
-  <button className="home-btns home-btn1" onClick={()=>router('/register')}>Register</button>
-  <button className="home-btns home-btn2" onClick={()=>router('/login')}>Login</button>
+  <Button className="home-btns home-btn1" colorScheme='teal' variant='solid' onClick={()=>router('/register')}>Register</Button>
+  <Button className="home-btns home-btn2" onClick={()=>router('/login')}>Login</Button>
 </div>
           <div>
 

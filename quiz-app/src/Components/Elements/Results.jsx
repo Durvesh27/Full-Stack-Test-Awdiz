@@ -1,69 +1,58 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useEffect } from "react";
-
+import { Text } from "@chakra-ui/react";
+import { useParams } from "react-router-dom";
 const Results = () => {
-  // const [question, setQuestion] = useState([]);
-  // const [answer, setAnswer] = useState([]);
+  const [question, setQuestion] = useState([]);
+  const [answer, setAnswer] = useState([]);
   const [score, setScore] = useState(0);
-
+  const [verify,setVerify]=useState(false)
+  // const { selectedCategory } = useParams()
   const checkAnswer = async () => {
-    // const token = JSON.parse(localStorage.getItem("QuizToken"));
-    // if (token) {
-    //   const ans = await axios.post("http://localhost:8000/get-answers", {
-    //     token,
-    //   });
-    //   if (ans.data.success) {
-    //     setAnswer(ans.data.answer);
-    //   }
-    // }
-    // const ques = await axios.post("http://localhost:8000/category-questions", {
-    //   category: "Science",
-    // });
-    // if (ques.data.success) {
-    //   setQuestion(ques.data.questions);
-    // }
+    const token = JSON.parse(localStorage.getItem("QuizToken"));
+    if (token) {
+      const ans = await axios.post("http://localhost:8000/get-answers", {
+        token,
+      });
+      if (ans.data.success) {
+        setAnswer(ans.data.answer);
+      }
+    }
+    const ques = await axios.post("http://localhost:8000/category-questions", {
+      category: "Cricket",
+    });
+    if (ques.data.success){
+      setQuestion(ques.data.questions);
+      setVerify(!verify)
+    }
   };
 
-  const getResult=async()=>{
-    const response = await axios.post("http://localhost:8000/get-result", {
-      category:"Science"
-    });
-    if (response.data.success) {
-      console.log("work")
-      setScore(response.data.marks);
-    }
-  }
 
-  // const getResult = () => {
-  //   let count=0;
-  //   question.forEach((que) => {
-  //     answer.forEach((ans) => {
-  //       if (que._id === ans.questionId && que.answer === ans.submittedAnswer) {
-  //         count+=1;
-  //       }
-  //     });
-  //   });
-  //   setScore(count)
-  // };
+  const getResult = () => {
+    let newScore = 0;
+    question.forEach((q) => {
+      const matchedAnswer = answer.find((a) => a.questionId === q._id);
+      if (matchedAnswer && matchedAnswer.submittedAnswer === q.answer) {
+        newScore++;
+      }
+    });
+    setScore(newScore);
+  };
 
 
   useEffect(() => {
-    // checkAnswer();
-    getResult()
+    checkAnswer();
   }, []);
 
-//   useEffect(()=>{
-//  getResult()
-//   },[])
+  useEffect(() => {
+    getResult()
+  },[verify]);
 
-  console.log(score)
-  // console.log(answer)
-  // console.log(question)
   return (
-    <div>
-      <h2>Congrats you are passed!</h2>
-      <p>Score : {score}/2</p>
+    <div className="result">
+      <Text fontSize='3xl' color="green">Congrats!!! you have Passed the Quiz</Text>
+      <Text fontSize='lg' color="black">Score : {score}/{question?.length}</Text>
     </div>
   );
 };

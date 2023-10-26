@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import "./Admin.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Text } from "@chakra-ui/react";
 import { useState } from "react";
 const Admin = () => {
     const [questionData,setQuestionData]=useState({category:"",categoryImg:"",question:"",opt1:"",opt2:"",opt3:"",opt4:"",answer:""})
@@ -42,7 +43,7 @@ const Admin = () => {
         <p>Admin</p>
       </nav>
       <div className='admin-box'>
-      <h2 style={{textAlign:"center"}}>Create Quiz</h2>
+      <Text fontSize='lg' textAlign="center" mt={5} mb={5}>Create Quiz</Text>
       <form className="form" onSubmit={handleSubmit}>
       <label>Enter Category</label>
         <input type="text" name="category" onChange={handleChange} className='form-ip'/>

@@ -6,7 +6,7 @@ import './Elements.css'
 import { useContext } from "react";
 import { AuthContext } from "../../MyContext";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@chakra-ui/react";
+import { Button ,Text} from "@chakra-ui/react";
 const Categories = () => {
   const [allCategories, setAllCategories] = useState([]);
   const [flag,setFlag]=useState(false)
@@ -30,12 +30,17 @@ setAllCategories(data.category)
   {
     allCategories.map((item)=>(
     <div key={item._id} className="main-class">
-    <h2>{item.category}</h2>
+    <Text fontSize='lg' fontWeight="medium" textAlign="center" mb={5} >{item?.category}</Text>
     <img src={item.categoryImg} className="cat-img" />
-    <Button onClick={()=>router(`/questions/${item.category}`)}>Start quiz</Button>
+    <Button display="block" m="auto"  mt="5" onClick={()=>router(`/questions/${item.category}`)}>Start quiz</Button>
     </div>
     ))
   }
+  <div className="logout">
+  <Button colorScheme='whatsapp' variant='solid'>
+  Logout
+  </Button>
+  </div>
   </div>;
 };
 
