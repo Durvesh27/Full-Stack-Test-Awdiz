@@ -1,1 +1,1 @@
-# Full-Stack-Test-Awdiz
+# Quiz App (Quiza)
