@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Radio, RadioGroup, Stack } from "@chakra-ui/react";
 import { AuthContext } from "../../MyContext";
+import Timer from "./Timer";
 const Questions = () => {
   const {state}=useContext(AuthContext)
   const [questionData, setQuestionData] = useState([]);
@@ -12,10 +13,8 @@ const Questions = () => {
   const [questionNo,setQuestionNo]=useState(1)
   const { quizCategory } = useParams();
   const [loading,setLoading]=useState(false)
-  const [timer,setTimer]=useState(0)
-  const [start,setStart]=useState(false)
-  const [end,setEnd]=useState(false)
   const router=useNavigate()
+  const quizDuration=50;
   var storedNum = Number(localStorage.getItem("Page"));
   const [page, setPage] = useState(
     Number.isInteger(storedNum) && storedNum !== 0 ? storedNum : 1
@@ -41,8 +40,8 @@ const Questions = () => {
 
 if(loading && questionData.length===0){
   localStorage.setItem("Page", String(1));
-  router('/result')
-  // router(`/result/${questionData[0]?.category}`)
+  router(`/result/${quizCategory}`)
+  localStorage.setItem('quizTimer', JSON.stringify(50));
 }
   const handleSubmit = async (quesId) => {
     try{
@@ -57,7 +56,6 @@ if(loading && questionData.length===0){
       setPage(page+1)
       setQuestionNo(questionNo+1)
       setCheck("")
-      setStart(true)
       alert("ans submitted")
       }
     }
@@ -67,20 +65,12 @@ if(loading && questionData.length===0){
   
   };
 
-// useEffect(()=>{
-// const timeout=setInterval(()=>{
-// setTimer(timer+1)
-// },1000)
+const handleTimeUp=()=>{
+localStorage.setItem('quizTimer', JSON.stringify(50));
+alert("Time up!!!")
+router(`/result/${quizCategory}`)
+}
 
-// console.log(timeout,"timeer")
-// // if(timeout===10){
-// // clearInterval(timeout)
-// // router('/result')
-// // }
-// // return () => {
-// //   clearInterval(timeout);
-// // };
-// },[])
 
   return (
     <div>
@@ -89,7 +79,9 @@ if(loading && questionData.length===0){
           <div>
             <div className="head-flex">
             <h2 style={{fontWeight:600,fontSize:"17px"}}><span>{questionNo}. </span> {item?.question}</h2>
-          <h2 style={{fontWeight:600,fontSize:"16px"}}>Time left : 5 sec</h2>
+          <h2 style={{fontWeight:600,fontSize:"16px"}}>
+          <Timer duration={quizDuration} onTimeUp={handleTimeUp} />
+          </h2>
             </div>
           <RadioGroup onChange={setCheck}>
             <Stack direction="column" spacing={10}>

@@ -1,14 +1,15 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { Text } from "@chakra-ui/react";
-import { useParams } from "react-router-dom";
+import { Button, Text } from "@chakra-ui/react";
+import { useNavigate, useParams } from "react-router-dom";
 const Results = () => {
   const [question, setQuestion] = useState([]);
   const [answer, setAnswer] = useState([]);
   const [score, setScore] = useState(0);
   const [verify,setVerify]=useState(false)
-  // const { selectedCategory } = useParams()
+  const { selectedCategory } = useParams()
+  const router=useNavigate()
   const checkAnswer = async () => {
     const token = JSON.parse(localStorage.getItem("QuizToken"));
     if (token) {
@@ -20,7 +21,7 @@ const Results = () => {
       }
     }
     const ques = await axios.post("http://localhost:8000/category-questions", {
-      category: "Cricket",
+      category: selectedCategory,
     });
     if (ques.data.success){
       setQuestion(ques.data.questions);
@@ -50,10 +51,22 @@ const Results = () => {
   },[verify]);
 
   return (
-    <div className="result">
-      <Text fontSize='3xl' color="green">Congrats!!! you have Passed the Quiz</Text>
+<div style={{position:"relative"}}>
+<div className="result">
+  {
+    score>=3?
+      <Text fontSize='3xl' color="green">Congrats!!! you have Passed the Quiz</Text>:
+      <Text fontSize='3xl' color="red">You have Failed the Quiz</Text>
+ 
+  }
       <Text fontSize='lg' color="black">Score : {score}/{question?.length}</Text>
     </div>
+      <div className="home-btn">
+      <Button colorScheme='whatsapp' variant='solid' onClick={()=>router(`/categories`)}>
+      Home
+      </Button>
+      </div>
+</div>
   );
 };
 

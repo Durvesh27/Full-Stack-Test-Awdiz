@@ -31,7 +31,7 @@ alert("Please fill all the fields")
 }
   return (
     <div className='user'>
-            <h2>Register</h2>
+            <h2 className='user-Text'>Register</h2>
       <form className='form' onSubmit={handleSubmit}>
         <label>Enter your name</label>
         <input type="text" name="name" onChange={handleChange} className='form-ip'/>
@@ -45,7 +45,7 @@ alert("Please fill all the fields")
         <label>Enter your password</label>
         <input type="password" name="password" onChange={handleChange} className='form-ip'/>
         <input type="submit" value='Register' className='reg-btn'/>
-        <p>Already have an account? <b style={{color:"blue"}} onClick={()=>router('/login')}>Login</b></p>
+        <p style={{marginTop:"10px"}}>Already have an account? <b style={{color:"blue"}} onClick={()=>router('/login')}>Login</b></p>
       </form>
     </div>
   )

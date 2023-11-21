@@ -17,7 +17,7 @@ function App() {
         <Route exact path="/login" element={<Login/>}/>
         <Route exact path="/admin" element={<Admin/>}/>
         <Route exact path="/dummy" element={<Dummy/>}/>
-        <Route exact path="/result" element={<Results/>}/>
+        <Route exact path="/result/:selectedCategory" element={<Results/>}/>
         <Route exact path="/categories" element={<Categories/>}/>
         <Route exact path="/questions/:quizCategory" element={<Questions/>}/>
       </Routes>

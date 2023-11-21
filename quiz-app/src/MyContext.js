@@ -69,7 +69,9 @@ useEffect(() => {
           console.log(error)
         }
       }else{
-        alert("no token")
+        dispatch({
+          type: "logout",
+        });
       }
     };
     getCurrentUserData();

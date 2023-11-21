@@ -9,8 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { Button ,Text} from "@chakra-ui/react";
 const Categories = () => {
   const [allCategories, setAllCategories] = useState([]);
-  const [flag,setFlag]=useState(false)
-  const {setQuestions}=useContext(AuthContext)
+  const {Logout,state}=useContext(AuthContext)
   const router=useNavigate()
   useEffect(() => {
     async function getAllCategories() {
@@ -25,6 +24,20 @@ setAllCategories(data.category)
     }
     getAllCategories()
   }, []);
+  
+  useEffect(()=>{
+    if(!state?.user){
+      router("/login")
+      }
+  },[state])
+
+  useEffect(()=>{
+    if(state?.user?.role=="Admin"){
+      router("/admin")
+      }
+  },[state])
+
+
 
   return <div className="categories">
   {
@@ -32,12 +45,20 @@ setAllCategories(data.category)
     <div key={item._id} className="main-class">
     <Text fontSize='lg' fontWeight="medium" textAlign="center" mb={5} >{item?.category}</Text>
     <img src={item.categoryImg} className="cat-img" />
+
     <Button display="block" m="auto"  mt="5" onClick={()=>router(`/questions/${item.category}`)}>Start quiz</Button>
     </div>
     ))
   }
   <div className="logout">
-  <Button colorScheme='whatsapp' variant='solid'>
+    <div style={{display:"flex"}}>
+    Hello!&nbsp;&nbsp;
+    <Text fontWeight={550} fontSize={17} color={"grey"}>
+           {state?.user?.name}
+    </Text>
+    </div>
+   
+  <Button colorScheme='whatsapp' variant='solid' onClick={Logout}>
   Logout
   </Button>
   </div>

@@ -21,13 +21,26 @@ border: 1px solid black;
 margin: 20px 50px;
 padding: 20px;
 height: 52vh;
-width: 60%;
+width: 65%;
 }
 .logout{
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 10px;
 position: absolute;
-top: 20px;
-right: 50px;
+top: 0px;
+right: 00px;
+width: 100%;
+background-color: #E2E8F0;
 }
+
+.home-btn{
+    position: absolute;
+    top: -70px;
+    right: 50px;
+    }
+
 .head-flex{
     display: flex;
     justify-content: space-between;

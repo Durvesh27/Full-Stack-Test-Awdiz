@@ -4,9 +4,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Text } from "@chakra-ui/react";
 import { useState } from "react";
+import { AuthContext } from "../../MyContext";
+import { useEffect } from "react";
 const Admin = () => {
     const [questionData,setQuestionData]=useState({category:"",categoryImg:"",question:"",opt1:"",opt2:"",opt3:"",opt4:"",answer:""})
     const router=useNavigate()
+    const {state,Logout}=useContext(AuthContext)
     const handleChange=(e)=>{
     setQuestionData({...questionData,[e.target.name]:e.target.value})
     }
@@ -33,14 +36,20 @@ const Admin = () => {
     alert("Please fill all the fields")
     }
     }
+
+    useEffect(()=>{
+      if(!state?.user){
+        router("/login")
+        }
+    },[state])
   return (
     <div className="admin">
       <nav className="admin-navbar">
         <div className="admin-nav1">
-          <p>My Quizzes</p>
+          <p>Admin</p>
           <p>Create Quiz</p>
         </div>
-        <p>Admin</p>
+        <p onClick={Logout}>Logout</p>
       </nav>
       <div className='admin-box'>
       <Text fontSize='lg' textAlign="center" mt={5} mb={5}>Create Quiz</Text>

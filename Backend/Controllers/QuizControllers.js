@@ -120,14 +120,14 @@ export const checkAnswer = async (req, res) => {
   }
 };
 
-export const allAnswers = async (req, res) => {
-  try {
-    const answer = await AnswerModal.find({});
-    return res.status(200).json({ success: true, answer });
-  } catch (error) {
-    return res.status(404).json({ success: false, message: error.message });
-  }
-};
+// export const allAnswers = async (req, res) => {
+//   try {
+//     const answer = await AnswerModal.find({});
+//     return res.status(200).json({ success: true, answer });
+//   } catch (error) {
+//     return res.status(404).json({ success: false, message: error.message });
+//   }
+// };
 
 export const getAnswerByUser = async (req, res) => {
   try {
