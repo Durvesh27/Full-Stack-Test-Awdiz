@@ -31,7 +31,7 @@ const Timer = ({ duration, onTimeUp ,}) => {
 
   return (
     <div>
-      <p>Time Remaining: {formatTime()}</p>
+      <p>Time left: {formatTime()}</p>
     </div>
   );
 };

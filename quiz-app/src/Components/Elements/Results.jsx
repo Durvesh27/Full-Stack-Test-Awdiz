@@ -55,7 +55,7 @@ const Results = () => {
 <div className="result">
   {
     score>=3?
-      <Text fontSize='3xl' color="green">Congrats!!! you have Passed the Quiz</Text>:
+      <Text fontSize='3xl' color="green" >Congrats!!! you have Passed the Quiz</Text>:
       <Text fontSize='3xl' color="red">You have Failed the Quiz</Text>
  
   }
