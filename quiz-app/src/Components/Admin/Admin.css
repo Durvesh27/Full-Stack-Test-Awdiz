@@ -1,22 +1,22 @@
-.admin{
-width: 100%;
+.admin {
+  width: 100%;
 }
-.admin-navbar{
-background-color: black;
-color: white;
-display: flex;
-justify-content: space-between;
-padding:15px 20px
+.admin-navbar {
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 20px;
 }
-.admin-nav1{
-display: flex;
-justify-content: space-between;
-width: 20%;
+.admin-nav1 {
+  display: flex;
+  justify-content: space-between;
+  width: 20%;
 }
-.admin-box{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 30px;
+.admin-box {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
 }

@@ -1,40 +1,8 @@
 import AnswerModal from "../Models/AnswerModal.js";
 import QuestionModel from "../Models/QuestionModel.js";
 import quizModel from "../Models/quizModel.js";
-import jwt from "jsonwebtoken";
 
-// export const CreateQuiz = async (req, res) => {
-//   try {
-//     const { category, categoryImg, question, opt1, opt2, opt3, opt4, answer } =
-//       req.body.questionData;
-//     const { token } = req.body;
-//     const decodedData = jwt.verify(token, process.env.JWT_SECRET);
-//     if (!decodedData) {
-//       return res
-//         .status(404)
-//         .json({ success: false, message: "Token not valid" });
-//     }
-//     const userId = decodedData.userId;
-//     const result = await quizModel.findOneAndUpdate({ category: category },{$push:{data:{question,opt1,opt2,opt3,opt4,answer}}});
-//    if(result){
-//     await result.save();
-//     return res.status(200).json({ success: true, message: "Question added"});
-//    }
-//     var details = {
-//       category,
-//       categoryImg,
-//       userId: userId,
-//     };
-//     if (!result) {
-//       const element = new quizModel(details);
-//       element.data.push({question, opt1, opt2, opt3, opt4 ,answer})
-//       await element.save();
-//       return res.status(200).json({ success: true, message: "quiz created" });
-//     }
-//   } catch (error) {
-//     return res.status(500).json({ success: false, message: error.message });
-//   }
-// };
+
 export const createQuestion = async (req, res) => {
   try {
     const { category, categoryImg, question, opt1, opt2, opt3, opt4, answer } =
@@ -120,15 +88,6 @@ export const checkAnswer = async (req, res) => {
   }
 };
 
-// export const allAnswers = async (req, res) => {
-//   try {
-//     const answer = await AnswerModal.find({});
-//     return res.status(200).json({ success: true, answer });
-//   } catch (error) {
-//     return res.status(404).json({ success: false, message: error.message });
-//   }
-// };
-
 export const getAnswerByUser = async (req, res) => {
   try {
     const answer = await AnswerModal.find({ userId: req.userId });
@@ -138,28 +97,3 @@ export const getAnswerByUser = async (req, res) => {
   }
 };
 
-// export const getResult = async (req, res) => {
-//   try {
-//     const { category } = req.body;
-//     const answers = await AnswerModal.find({});
-//     const questions = await QuestionModel.find({ category: category });
-//     // console.log(questions,answers)
-// if(questions && answers){
-//   function markCalc(){
-//     let newScore = 0;
-//     questions.forEach((q) => {
-//       const matchedAnswer = answers.find((a) => a.questionId === q._id);
-//       if (matchedAnswer && matchedAnswer.submittedAnswer === q.answer) {
-//         newScore++;
-//       }
-//       return newScore
-//     });
-//   }
-//   return res.status(200).json({ success: true, marks:markCalc() });
-// }else{
-//   console.log("missing")
-// }
-//   } catch (error) {
-//     return res.status(404).json({ success: false, message: error.message });
-//   }
-// };

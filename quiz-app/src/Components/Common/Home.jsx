@@ -6,14 +6,14 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@chakra-ui/react";
 import { useEffect } from "react";
 const Home = () => {
-  const { state} = useContext(AuthContext);
-  const router=useNavigate()
- 
-  useEffect(()=>{
-    if(state?.user?.name){
-      router("/categories")
-      }
-  },[state])
+  const { state } = useContext(AuthContext);
+  const router = useNavigate();
+
+  useEffect(() => {
+    if (state?.user?.name) {
+      router("/categories");
+    }
+  }, [state]);
 
   return (
     <>
@@ -23,12 +23,26 @@ const Home = () => {
           alt=""
         />
         <div className="home-sec">
-<h1 className="home-sec-title">Welcome to Quiza</h1>
-<p className="home-text">Practice and Set-up quizzes on our Platform</p>
-<div>
-  <Button className="home-btns home-btn1" colorScheme='teal' variant='solid' onClick={()=>router('/register')}>Register</Button>
-  <Button className="home-btns home-btn2" onClick={()=>router('/login')}>Login</Button>
-</div>
+          <h1 className="home-sec-title">Welcome to Quiza</h1>
+          <p className="home-text">
+            Practice and Set-up quizzes on our Platform
+          </p>
+          <div>
+            <Button
+              className="home-btns home-btn1"
+              colorScheme="teal"
+              variant="solid"
+              onClick={() => router("/register")}
+            >
+              Register
+            </Button>
+            <Button
+              className="home-btns home-btn2"
+              onClick={() => router("/login")}
+            >
+              Login
+            </Button>
+          </div>
         </div>
       </div>
     </>
