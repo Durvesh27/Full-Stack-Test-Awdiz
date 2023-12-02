@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useReducer } from "react";
 import { createContext } from "react";
+import api from "./Components/Api Config";
 
 export const AuthContext=createContext()
 
@@ -54,8 +55,8 @@ useEffect(() => {
       const token = JSON.parse(localStorage.getItem("QuizToken"));
       if(token){
         try{
-          const response = await axios.post(
-            "http://localhost:8000/current-user",
+          const response = await api.post(
+            "/current-user",
             { token }
           );
           if (response.data.success) {
