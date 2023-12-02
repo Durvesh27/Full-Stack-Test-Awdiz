@@ -9,7 +9,7 @@ import Results from "./Components/Elements/Results";
 
 function App() {
   return (
-    <>
+    <div>
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/register" element={<Register />} />
@@ -19,7 +19,7 @@ function App() {
         <Route exact path="/categories" element={<Categories />} />
         <Route exact path="/questions/:quizCategory" element={<Questions />} />
       </Routes>
-    </>
+    </div>
   );
 }
 
