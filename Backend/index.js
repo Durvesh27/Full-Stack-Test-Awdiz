@@ -24,6 +24,7 @@ app.post("/get-data",getData)
 app.post("/submit-answer",CheckUser,checkAnswer)
 app.post("/get-answers",CheckUser,getAnswerByUser)
 app.post("/category-questions",categoryQuestions)
+
 mongoose.connect(process.env.MONGO_URL)
 .then(()=>{
 console.log("Connected to DB")
