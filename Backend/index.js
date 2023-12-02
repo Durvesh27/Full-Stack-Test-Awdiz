@@ -11,9 +11,10 @@ app.use(express.json())
 app.use(cors())
 dotenv.config()
 
-app.get('/',()=>{
+app.get('/',(req,res)=>{
     res.send("App working")
 })
+
 app.post("/register",Register)
 app.post("/login",Login)
 app.post("/current-user",getCurrentUser)
